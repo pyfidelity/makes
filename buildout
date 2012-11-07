@@ -1,0 +1,25 @@
+
+version = 2.6
+python = python$(version)
+
+all: .installed.cfg
+
+define cfg
+[buildout]
+extends = base.cfg
+endef
+export cfg
+
+buildout.cfg:
+	echo "$$cfg" > $@
+
+.installed.cfg: bin/buildout buildout.cfg
+	bin/buildout
+
+bin/buildout: bootstrap.py
+	$(python) bootstrap.py
+
+clean:
+	-rm -rf .installed.cfg bin parts develop-eggs fake-eggs
+
+.PHONY: all clean
