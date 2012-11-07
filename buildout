@@ -20,6 +20,7 @@ buildout.cfg:
 
 bin/buildout: bootstrap.py buildout.cfg
 	$(python) bootstrap.py
+	touch bin/buildout
 
 bootstrap.py:
 	$(python) -c 'import urllib; urllib.urlretrieve("$(bootstrap)", "$@")'
