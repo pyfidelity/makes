@@ -16,7 +16,7 @@ buildout.cfg:
 .installed.cfg: bin/buildout buildout.cfg
 	bin/buildout
 
-bin/buildout: bootstrap.py
+bin/buildout: bootstrap.py buildout.cfg
 	$(python) bootstrap.py
 
 clean:
