@@ -1,6 +1,7 @@
 
 version = 2.6
 python = python$(version)
+bootstrap = https://github.com/buildout/buildout/raw/1.6.x/bootstrap/bootstrap.py
 
 all: .installed.cfg
 
@@ -18,6 +19,9 @@ buildout.cfg:
 
 bin/buildout: bootstrap.py buildout.cfg
 	$(python) bootstrap.py
+
+bootstrap.py:
+	$(python) -c 'import urllib; urllib.urlretrieve("$(bootstrap)", "$@")'
 
 clean:
 	-rm -rf .installed.cfg bin parts develop-eggs fake-eggs
