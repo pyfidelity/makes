@@ -1,3 +1,4 @@
+# makefile to create a `buildout.cfg` (extending `base.cfg`) and run buildout
 
 version = 2.6
 python = python$(version)
