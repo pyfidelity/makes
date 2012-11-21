@@ -3,12 +3,13 @@
 version = 2.6
 python = python$(version)
 bootstrap = https://github.com/buildout/buildout/raw/1.6.x/bootstrap/bootstrap.py
+config = base.cfg
 
 all: .installed.cfg
 
 define cfg
 [buildout]
-extends = base.cfg
+extends = $(config)
 endef
 export cfg
 
