@@ -3,6 +3,8 @@
 version = 2.6
 python = python$(version)
 bootstrap = https://github.com/buildout/buildout/raw/1.6.x/bootstrap/bootstrap.py
+bootstrap_options =
+buildout_options =
 config = base.cfg
 
 all: .installed.cfg
@@ -17,10 +19,10 @@ buildout.cfg:
 	echo "$$cfg" > $@
 
 .installed.cfg: bin/buildout buildout.cfg
-	bin/buildout
+	bin/buildout $(buildout_options)
 
 bin/buildout: bootstrap.py buildout.cfg
-	$(python) bootstrap.py
+	$(python) bootstrap.py $(bootstrap_options)
 	@touch bin/buildout
 
 bootstrap.py:
