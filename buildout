@@ -2,7 +2,7 @@
 
 version = 2.7
 python = python$(version)
-bootstrap = https://github.com/buildout/buildout/raw/1.6.x/bootstrap/bootstrap.py
+bootstrap = https://raw.github.com/buildout/buildout/1.6.3/bootstrap/bootstrap.py
 bootstrap_options =
 buildout_options =
 config = base.cfg
