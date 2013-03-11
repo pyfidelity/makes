@@ -1,9 +1,10 @@
 # makefile to create a `buildout.cfg` (extending `base.cfg`) and run buildout
 
 version = 2.7
+buildout_version = 1.6.3
 python = python$(version)
 bootstrap = https://raw.github.com/buildout/buildout/1.6.3/bootstrap/bootstrap.py
-bootstrap_options = --version=1.6.3
+bootstrap_options = --version=$(buildout_version)
 buildout_options =
 config = base.cfg
 
