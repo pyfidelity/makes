@@ -17,7 +17,7 @@ endef
 export cfg
 
 buildout.cfg:
-	echo "$$cfg" > $@
+	test -e $@ || echo "$$cfg" > $@
 
 .installed.cfg: bin/buildout buildout.cfg
 	bin/buildout $(buildout_options)
