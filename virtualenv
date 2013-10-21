@@ -1,0 +1,14 @@
+# set up a virtual env with a bare OSX python installation (w/o `virtualenv`)
+
+dir = lib/python2.7/site-packages
+venv = $(dir)/virtualenv
+
+bin/python: $(venv)
+	$(venv) .
+
+$(venv): $(dir)
+	PYTHONPATH=$(dir) easy_install -d $(dir) virtualenv
+
+$(dir):
+	mkdir -p $@
+
