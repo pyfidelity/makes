@@ -1,0 +1,18 @@
+
+define rc
+{"url": "http://0bin.net/"}
+endef
+export rc
+
+zerobinpaste: 0bin/tools/zerobinpaste $(HOME)/.zerobinpasterc
+	test -e $@ || ln -s $<
+
+0bin/tools/zerobinpaste: 0bin/setup.py
+	$(MAKE) -C 0bin/tools
+
+0bin/setup.py:
+	git clone https://github.com/sametmax/0bin.git
+
+$(HOME)/.zerobinpasterc:
+	test -e $@ || echo "$$rc" > $@
+
