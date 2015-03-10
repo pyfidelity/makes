@@ -11,7 +11,7 @@ zerobinpaste: 0bin/tools/zerobinpaste $(HOME)/.zerobinpasterc
 	$(MAKE) -C 0bin/tools
 
 0bin/setup.py:
-	git clone https://github.com/sametmax/0bin.git
+	git clone https://github.com/pyfidelity/0bin.git
 
 $(HOME)/.zerobinpasterc:
 	test -e $@ || echo "$$rc" > $@
