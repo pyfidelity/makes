@@ -26,7 +26,4 @@ bin/buildout: bin/pip
 bin/pip:
 	$(virtualenv) --clear .
 
-clean:
-	-rm -rf .installed.cfg bin parts develop-eggs fake-eggs
-
-.PHONY: all clean
+.PHONY: all
