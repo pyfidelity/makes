@@ -2,7 +2,7 @@
 
 version = 2.7
 virtualenv = virtualenv-$(version)
-buildout_options = versions:setuptools=
+buildout_options = buildout:allow-hosts+=localhost:3141 versions:setuptools=
 config = base.cfg
 
 all: .installed.cfg
