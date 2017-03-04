@@ -1,10 +1,7 @@
 # makefile to create a `buildout.cfg` (extending `base.cfg`) and run buildout
 
 version = 2.7
-buildout_version = 1.6.3
-python = python$(version)
-bootstrap = https://raw.github.com/buildout/buildout/1.6.3/bootstrap/bootstrap.py
-bootstrap_options = --version=$(buildout_version)
+virtualenv = virtualenv-$(version)
 buildout_options =
 config = base.cfg
 
@@ -19,15 +16,15 @@ export cfg
 buildout.cfg:
 	test -e $@ || echo "$$cfg" > $@
 
-.installed.cfg: bin/buildout buildout.cfg
+.installed.cfg: bin/buildout *.cfg
 	bin/buildout $(buildout_options)
 
-bin/buildout: bootstrap.py buildout.cfg
-	$(python) bootstrap.py $(bootstrap_options)
-	@touch bin/buildout
+bin/buildout: bin/pip
+	bin/pip install --upgrade setuptools pip zc.buildout
+	@touch -c $@
 
-bootstrap.py:
-	$(python) -c 'import urllib; urllib.urlretrieve("$(bootstrap)", "$@")'
+bin/pip:
+	$(virtualenv) --clear .
 
 clean:
 	-rm -rf .installed.cfg bin parts develop-eggs fake-eggs
