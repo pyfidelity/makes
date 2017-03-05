@@ -1,0 +1,44 @@
+# set up a devpi server (in ~/.devpi/)
+
+name = net.devpi.devpi-server
+plist = $(HOME)/Library/LaunchAgents/$(name).plist
+dir = $(HOME)/.devpi
+
+define plist_contents
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>$(name)</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>$(dir)/bin/devpi-server</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>WorkingDirectory</key>
+	<string>$(dir)</string>
+	<key>StandardErrorPath</key>
+	<string>$(dir)/log.txt</string>
+</dict>
+</plist>
+endef
+export plist_contents
+
+$(dir)/server/.secret: $(dir)/bin/devpi-server $(dir)/server/.serverversion $(plist)
+	launchctl load -w $(plist)
+
+$(dir)/server/.serverversion: $(dir)/bin/devpi-server
+	$(dir)/bin/devpi-server --serverdir $(dir)/server --init
+
+$(dir)/bin/devpi-server: $(dir)/bin/pip
+	$(dir)/bin/pip install -i https://pypi.python.org/simple/ devpi-server devpi-web
+
+$(dir)/bin/pip:
+	virtualenv --clear $(dir)
+
+$(plist):
+	echo "$$plist_contents" > $@
