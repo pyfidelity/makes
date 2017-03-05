@@ -28,11 +28,22 @@ define plist_contents
 endef
 export plist_contents
 
+setup: devpi = $(dir)/bin/devpi
+setup: $(dir)/bin/devpi $(dir)/server/.secret
+	$(devpi) use http://localhost:3141/
+	$(devpi) user -c $(LOGNAME) password=
+	$(devpi) login $(LOGNAME) --password=
+	$(devpi) index -c dev bases=root/pypi
+	$(devpi) use $(LOGNAME)/dev
+
 $(dir)/server/.secret: $(dir)/bin/devpi-server $(dir)/server/.serverversion $(plist)
 	launchctl load -w $(plist)
 
 $(dir)/server/.serverversion: $(dir)/bin/devpi-server
 	$(dir)/bin/devpi-server --serverdir $(dir)/server --init
+
+$(dir)/bin/devpi: $(dir)/bin/pip
+	$(dir)/bin/pip install -i https://pypi.python.org/simple/ devpi-client
 
 $(dir)/bin/devpi-server: $(dir)/bin/pip
 	$(dir)/bin/pip install -i https://pypi.python.org/simple/ devpi-server devpi-web
@@ -42,3 +53,5 @@ $(dir)/bin/pip:
 
 $(plist):
 	echo "$$plist_contents" > $@
+
+.PHONY: setup
