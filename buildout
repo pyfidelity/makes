@@ -1,7 +1,6 @@
 # makefile to create a `buildout.cfg` (extending `base.cfg`) and run buildout
 
 version = 2.7
-virtualenv = virtualenv-$(version)
 buildout_options = buildout:allow-hosts+=localhost:3141 versions:setuptools=
 config = base.cfg
 
@@ -24,6 +23,6 @@ bin/buildout: bin/pip
 	@touch -c $@
 
 bin/pip:
-	$(virtualenv) --clear .
+	virtualenv --clear --python=python$(version) .
 
 .PHONY: all
