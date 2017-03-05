@@ -4,30 +4,6 @@ name = net.devpi.devpi-server
 plist = $(HOME)/Library/LaunchAgents/$(name).plist
 dir = $(HOME)/.devpi
 
-define plist_contents
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>KeepAlive</key>
-	<true/>
-	<key>Label</key>
-	<string>$(name)</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>$(dir)/bin/devpi-server</string>
-	</array>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>WorkingDirectory</key>
-	<string>$(dir)</string>
-	<key>StandardErrorPath</key>
-	<string>$(dir)/log.txt</string>
-</dict>
-</plist>
-endef
-export plist_contents
-
 setup: devpi = $(dir)/bin/devpi
 setup: $(dir)/bin/devpi $(dir)/server/.secret
 	$(devpi) use http://localhost:3141/
@@ -53,5 +29,29 @@ $(dir)/bin/pip:
 
 $(plist):
 	echo "$$plist_contents" > $@
+
+define plist_contents
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>$(name)</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>$(dir)/bin/devpi-server</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>WorkingDirectory</key>
+	<string>$(dir)</string>
+	<key>StandardErrorPath</key>
+	<string>$(dir)/log.txt</string>
+</dict>
+</plist>
+endef
+export plist_contents
 
 .PHONY: setup
